@@ -6,7 +6,7 @@ This project is designed to synchronize OAuth clients between a directory servic
 
 The solution is designed to be easily tailored to Ping Federate deployments recognising that different implementations will have extended their OAuth client configuration with additional metadata that's unique to each deployment.
 
-To be as flexible as possible, the client template `pf-createClient.json` has been taken directly from the Ping Federate swagger that is available on `https://pf-host:9999/pf-admin-api/api-docs/#/%2Foauth%2Fclients/createClient`. This should ensure that any changes to the base ping federate client object or client definition can be incorporated simply by updating this object.
+To be as flexible as possible, the client template `clientDefinition.json` has been taken directly from the Ping Federate swagger that is available on `https://pf-host:9999/pf-admin-api/api-docs/#/%2Foauth%2Fclients/createClient`. This should ensure that any changes to the base ping federate client object or client definition can be incorporated simply by updating this object.
 
 ## Detailed Logic
 
@@ -82,9 +82,9 @@ The application is configured via a `config.js` file. Below are the configuratio
 
 ### Extended attributes claims mappings
 
-The utility has a means of mapping any claims from the Directory to Ping Federates OAuth extended attributes simply by adding elements to the following map. Any entry included in the Clients API Response can be referenced, even those that are already used as part of standard claims. 
+The utility has a means of mapping any claims from the Directory to Ping Federates OAuth extended attributes simply by adding elements to the following map. Any entry included in the Clients API Response can be referenced, even those that are already used as part of standard claims.  The program will take a property from the DirectoryClients record and add it as an extended oAuth client attribute to Ping Federate Extended Properties[https://docs.pingidentity.com/r/en-us/pingfederate-112/help_extendedpropertiestasklet_extendedpropertiesstate]. Please note that all properties are specified as an array of multiple values even if you only wish to store a single property.
 
-NOTE: The extended oauth attributes that are being written must already have been created in Ping Federate. Failing to create these first will result in the client updates failing to be written correctly.
+WARNING: The extended oauth attributes that are being written must already have been created in Ping Federate. Failing to create these first will result in the client updates failing to be written correctly.
 
 ``` Javascript
 export const claimsMapping = {
@@ -126,30 +126,11 @@ export const claimsMapping = {
 
 4. **Configure the Application**: 
 
-    Open the `config.js` file and update it with your specific settings. Make sure to place your certificate, key, and CA files in the appropriate locations and update their paths in the `config.js` file.
+    Open the `config/config.js` file and update it with your specific settings. Make sure to place your certificate, key, and CA files in the appropriate locations and update their paths in the `config/config.js` file.
 
 5. **Configure your default Ping Federate client configurationn**: 
 
-    Open the `pf-createClient.js` file and update it with your specific settings. This file is simply an extra from the PF Admin API payload for creating a new oAuth client. This file allows you to specify items that are unique to your deployment including ATManagerIds OIDCPolicyIDs and any specific extension attributes you wish to configure into every client. For more details on this payload please refer to the Ping Fed Admin API Swagger Documentation in the Ping Fed Manual.
-
-6. **Configure or review the  mergeClient method help function**: 
-
-    Open the `pf-admin.js` file and update the merge function with your specific settings. This function is responsible for merging changes from the Directory into the Ping Federate client record that you wish to use as your base or that has been previously added to Ping. This should not need to be modified unless there are specific additional custom attributes that you wish to map from Client Record or you wish to change the default mappings.
-
-    For example:
-    ```javascript
-        if (directoryClient.last_updated) {
-            existingPfClient.extendedParameters.register_last_updated = {
-                values: [directoryClient.last_updated]
-            }   
-        }
-        else {
-            existingPfClient.extendedParameters.register_last_updated = {
-                values: []
-            }   
-        }
-    ```
-    This function will take a property from the DirectoryClients record and add it as an extended oAuth client attribute to Ping Federate Extended Properties[https://docs.pingidentity.com/r/en-us/pingfederate-112/help_extendedpropertiestasklet_extendedpropertiesstate]. Please note that all properties are specified as an array of multiple values even if you only wish to store a single property.
+    Open the `clientDefinition.json` file and update it with your specific settings. This file is simply an extra from the PF Admin API payload for creating a new oAuth client. This file allows you to specify items that are unique to your deployment including ATManagerIds OIDCPolicyIDs and any specific extension attributes you wish to configure into every client. For more details on this payload please refer to the Ping Fed Admin API Swagger Documentation in the Ping Fed Manual.
 
 6. **Run the Application**:
 

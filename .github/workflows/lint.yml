@@ -1,0 +1,30 @@
+name: ESLint
+
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - '**.md'
+  pull_request:
+    types: [opened, synchronize, reopened]
+    paths-ignore:
+      - '**.md'
+
+jobs:
+  lint:
+    if: github.actor != 'dependabot[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3.5.2
+      - uses: actions/setup-node@v3.8.1
+        with:
+          node-version: 18
+      - name: npm ci
+        run: npm ci
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_REGISTRY_TOKEN_READ }}
+      - name: Lint
+        run: npm run lint
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_REGISTRY_TOKEN_READ }}
