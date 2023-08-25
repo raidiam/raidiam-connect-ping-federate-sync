@@ -1,5 +1,5 @@
 import data from './pf-createClient.json' assert { type: 'json' };
-import { config } from './config.js';
+import { config, claimsMapping } from './config.js';
 import fetch from 'node-fetch';
 import https from 'https';
 import { Logger } from 'winston'
@@ -113,56 +113,18 @@ class PingFederateClientManager {
             existingPfClient.jwksSettings.jwksUrl = directoryClient.jwks_uri;
             existingPfClient.logoUrl = directoryClient.logo_uri;
             existingPfClient.clientId = directoryClient.client_id;
-            if (directoryClient.organisation_id) {
-                existingPfClient.extendedParameters.organisation_id = {
-                    values: [directoryClient.organisation_id]
+
+            for (const [key, value] of Object.entries(claimsMapping)) {
+                if (directoryClient[key]) {
+                    existingPfClient.extendedParameters[value] = {
+                        values: [directoryClient[key]]
+                    }
                 }
-            }
-            else {
-                existingPfClient.extendedParameters.organisation_id = {
-                    values: []
+                else {
+                    existingPfClient.extendedParameters[value] = {
+                        values: []
+                    }
                 }
-            }
-            if (directoryClient.software_id) {
-                existingPfClient.extendedParameters.software_id = {
-                    values: [directoryClient.software_id]
-                }
-            }
-            else {
-                existingPfClient.extendedParameters.software_id = {
-                    values: []
-                }
-            }
-            if (directoryClient.software_version) {
-                existingPfClient.extendedParameters.software_version = {
-                    values: [directoryClient.software_version]
-                }
-            }
-            else {
-                existingPfClient.extendedParameters.software_version = {
-                    values: []
-                }
-            }
-        
-            if (directoryClient.claims) {
-                existingPfClient.extendedParameters.claims = {
-                    values: directoryClient.claims
-                }   
-            }
-            else {
-                existingPfClient.extendedParameters.claims = {
-                    values: []
-                }
-            }
-            if (directoryClient.last_updated) {
-                existingPfClient.extendedParameters.register_last_updated = {
-                    values: [directoryClient.last_updated]
-                }   
-            }
-            else {
-                existingPfClient.extendedParameters.register_last_updated = {
-                    values: []
-                }   
             }
         
             return existingPfClient;

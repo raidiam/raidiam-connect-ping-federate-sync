@@ -80,6 +80,21 @@ The application is configured via a `config.js` file. Below are the configuratio
 - `resync_clients_retrieved_from_directory`: Boolean to indicate whether to force resync active clients against ping federate.
 - `https_proxy`: String to point to a CONNECT tunnel proxy like squid proxy. Null by default.
 
+### Extended attributes claims mappings
+
+The utility has a means of mapping any claims from the Directory to Ping Federates OAuth extended attributes simply by adding elements to the following map. Any entry included in the Clients API Response can be referenced, even those that are already used as part of standard claims. 
+
+NOTE: The extended oauth attributes that are being written must already have been created in Ping Federate. Failing to create these first will result in the client updates failing to be written correctly.
+
+``` Javascript
+export const claimsMapping = {
+    last_updated: "register_last_updated",
+    organisation_id: "organisation_id",
+    software_id: "software_id",
+    software_version: "software_version",
+    claims: "claims"
+}
+```
 
 ## Setup
 

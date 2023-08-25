@@ -16,5 +16,17 @@ export const config = {
     ping_federate_client_delete_instead_of_disable: true,
     resync_clients_retrieved_from_directory: false,
     log_level: 'debug', // info or debug
-    https_proxy: 'http://localhost:3128'
+    https_proxy: null //'http://localhost:3128' // null
+}
+
+// Directoy claims to ping federate extended attributes mapping
+// This will be used to map attributes from the directory clients json object which is typically RFC compliant to the Ping Federate extended attributes which are user defined
+// e.g 
+export const claimsMapping = {
+    last_updated: "register_last_updated",
+    organisation_id: "organisation_id",
+    software_id: "software_id",
+    software_version: "software_version",
+    claims: "claims",
+
 }
