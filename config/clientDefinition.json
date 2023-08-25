@@ -1,13 +1,8 @@
 {
   "clientId": "test",
   "enabled": true,
-  "redirectUris": [
-      "https://foo.com/bar",
-      "https://boo.com"
-  ],
-  "grantTypes": [
-      "AUTHORIZATION_CODE"
-  ],
+  "redirectUris": ["https://foo.com/bar", "https://boo.com"],
+  "grantTypes": ["AUTHORIZATION_CODE"],
   "name": "test",
   "description": "",
   "logoUrl": "https://logo.com/something.gif",
@@ -30,32 +25,28 @@
   "requestObjectSigningAlgorithm": "PS256",
   "restrictedScopes": ["openid"],
   "exclusiveScopes": [],
-  "restrictedResponseTypes": [
-      "code"
-  ],
+  "restrictedResponseTypes": ["code"],
   "authorizationDetailTypes": [],
   "restrictToDefaultAccessTokenManager": false,
   "validateUsingAllEligibleAtms": true,
   "oidcPolicy": {
-      "grantAccessSessionRevocationApi": false,
-      "grantAccessSessionSessionManagementApi": false,
-      "logoutMode": "NONE",
-      "pingAccessLogoutCapable": false,
-      "pairwiseIdentifierUserType": true,
-      "sectorIdentifierUri": "https://sectoridentifier.com"
+    "grantAccessSessionRevocationApi": false,
+    "grantAccessSessionSessionManagementApi": false,
+    "logoutMode": "NONE",
+    "pingAccessLogoutCapable": false,
+    "pairwiseIdentifierUserType": true,
+    "sectorIdentifierUri": "https://sectoridentifier.com"
   },
   "clientAuth": {
-      "type": "PRIVATE_KEY_JWT",
-      "secondarySecrets": [],
-      "enforceReplayPrevention": false,
-      "tokenEndpointAuthSigningAlgorithm": "PS256"
+    "type": "PRIVATE_KEY_JWT",
+    "secondarySecrets": [],
+    "enforceReplayPrevention": false,
+    "tokenEndpointAuthSigningAlgorithm": "PS256"
   },
   "jwksSettings": {
-      "jwksUrl": "https://doesnotexist/jwks"
+    "jwksUrl": "https://doesnotexist/jwks"
   },
-  "extendedParameters": {
-      
-  },
+  "extendedParameters": {},
   "deviceFlowSettingType": "SERVER_DEFAULT",
   "requireProofKeyForCodeExchange": true,
   "refreshTokenRollingGracePeriodType": "SERVER_DEFAULT",

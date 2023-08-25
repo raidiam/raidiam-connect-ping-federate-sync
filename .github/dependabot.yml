@@ -3,6 +3,7 @@ registries:
   npm-npmjs:
     type: npm-registry
     url: https://registry.npmjs.org
+    token: ${{secrets.NPM_REGISTRY_TOKEN_READ}}
 updates:
 - package-ecosystem: "github-actions"
   directory: "/"

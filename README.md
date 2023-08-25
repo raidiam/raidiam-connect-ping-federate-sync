@@ -82,11 +82,11 @@ The application is configured via a `config.js` file. Below are the configuratio
 
 ### Extended attributes claims mappings
 
-The utility has a means of mapping any claims from the Directory to Ping Federates OAuth extended attributes simply by adding elements to the following map. Any entry included in the Clients API Response can be referenced, even those that are already used as part of standard claims.  The program will take a property from the DirectoryClients record and add it as an extended oAuth client attribute to Ping Federate Extended Properties[https://docs.pingidentity.com/r/en-us/pingfederate-112/help_extendedpropertiestasklet_extendedpropertiesstate]. Please note that all properties are specified as an array of multiple values even if you only wish to store a single property.
+The utility has a means of mapping any claims from the Directory to Ping Federates OAuth extended attributes simply by adding elements to the following map. Any entry included in the Clients API Response can be referenced, even those that are already used as part of standard claims. The program will take a property from the DirectoryClients record and add it as an extended oAuth client attribute to Ping Federate Extended Properties[https://docs.pingidentity.com/r/en-us/pingfederate-112/help_extendedpropertiestasklet_extendedpropertiesstate]. Please note that all properties are specified as an array of multiple values even if you only wish to store a single property.
 
 WARNING: The extended oauth attributes that are being written must already have been created in Ping Federate. Failing to create these first will result in the client updates failing to be written correctly.
 
-``` Javascript
+```Javascript
 export const claimsMapping = {
     last_updated: "register_last_updated",
     organisation_id: "organisation_id",
@@ -106,37 +106,37 @@ export const claimsMapping = {
 
 ### Steps
 
-1. **Clone the Repository**: 
+1. **Clone the Repository**:
 
-    ```bash
-    git clone https://github.com/raidiam/raidim-connect-ping-federate-client-sync.git
-    ```
+   ```bash
+   git clone https://github.com/raidiam/raidim-connect-ping-federate-client-sync.git
+   ```
 
 2. **Navigate to the Project Directory**:
 
-    ```bash
-    cd raidim-connect-ping-federate-client-sync
-    ```
+   ```bash
+   cd raidim-connect-ping-federate-client-sync
+   ```
 
 3. **Install Dependencies**:
 
-    ```bash
-    npm install
-    ```
+   ```bash
+   npm install
+   ```
 
-4. **Configure the Application**: 
+4. **Configure the Application**:
 
-    Open the `config/config.js` file and update it with your specific settings. Make sure to place your certificate, key, and CA files in the appropriate locations and update their paths in the `config/config.js` file.
+   Open the `config/config.js` file and update it with your specific settings. Make sure to place your certificate, key, and CA files in the appropriate locations and update their paths in the `config/config.js` file.
 
-5. **Configure your default Ping Federate client configurationn**: 
+5. **Configure your default Ping Federate client configurationn**:
 
-    Open the `clientDefinition.json` file and update it with your specific settings. This file is simply an extra from the PF Admin API payload for creating a new oAuth client. This file allows you to specify items that are unique to your deployment including ATManagerIds OIDCPolicyIDs and any specific extension attributes you wish to configure into every client. For more details on this payload please refer to the Ping Fed Admin API Swagger Documentation in the Ping Fed Manual.
+   Open the `clientDefinition.json` file and update it with your specific settings. This file is simply an extra from the PF Admin API payload for creating a new oAuth client. This file allows you to specify items that are unique to your deployment including ATManagerIds OIDCPolicyIDs and any specific extension attributes you wish to configure into every client. For more details on this payload please refer to the Ping Fed Admin API Swagger Documentation in the Ping Fed Manual.
 
 6. **Run the Application**:
 
-    ```bash
-    node index.js
-    ```
+   ```bash
+   node index.js
+   ```
 
 ## Testing
 
