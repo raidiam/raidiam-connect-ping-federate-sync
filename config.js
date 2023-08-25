@@ -7,6 +7,7 @@ export const config = {
     directory_client_cert: fs.readFileSync('./certs/transport.pem'),
     directory_client_key: fs.readFileSync('./certs/transport.key'),
     directory_client_ca: fs.readFileSync('./certs/ca.pem'),
+    directory_tls_reject_unauthorized: true,
     ping_federate_admin_uri: "https://localhost:9999/pf-admin-api/v1/oauth/clients",
     ping_federate_admin_username: "Administrator",
     ping_federate_admin_password: "2FederateM0re",
@@ -14,5 +15,6 @@ export const config = {
     ping_federate_connection_reject_unauthorized: false,
     ping_federate_client_delete_instead_of_disable: true,
     resync_clients_retrieved_from_directory: false,
-    log_level: 'debug' // info or debug
+    log_level: 'debug', // info or debug
+    https_proxy: 'http://localhost:3128'
 }

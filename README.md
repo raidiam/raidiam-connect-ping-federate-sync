@@ -78,6 +78,7 @@ The application is configured via a `config.js` file. Below are the configuratio
 - `ping_federate_connection_reject_unauthorized`: Boolean to indicate whether to reject unauthorized SSL certificates when connecting to Ping Federate.
 - `ping_federate_client_delete_instead_of_disable`: Boolean to indicate whether to delete clients in Ping Federate instead of disabling them.
 - `resync_clients_retrieved_from_directory`: Boolean to indicate whether to force resync active clients against ping federate.
+- `https_proxy`: String to point to a CONNECT tunnel proxy like squid proxy. Null by default.
 
 
 ## Setup

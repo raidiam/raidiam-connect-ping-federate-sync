@@ -3,6 +3,7 @@ import { config } from './config.js';
 import PingFederateClientManager from './pf-admin.js';
 import { Logger } from 'winston'
 import { getLogger } from './logger.js';
+import { HttpsProxyAgent } from 'https-proxy-agent';
 const logger = getLogger(config.log_level)
 
 
@@ -22,8 +23,10 @@ async function createDirectoryClient(directoryIssuer) {
         token_endpoint_auth_method: 'tls_client_auth',
     });
 
-    directoryClient[custom.http_options] = function(options) {
+    directoryClient[custom.http_options] = function(url, options) {
+
         return {
+            ... (config.https_proxy ? { agent: new HttpsProxyAgent(config.https_proxy, { rejectUnauthorized: config.directory_tls_reject_unauthorized }) } : {}),
             cert: config.directory_client_cert,
             key: config.directory_client_key,
             ca: config.directory_client_ca
