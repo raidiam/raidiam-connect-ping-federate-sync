@@ -117,8 +117,7 @@ class PingFederateClientManager {
             for (const [key, value] of Object.entries(claimsMapping)) {
                 if (directoryClient[key]) {
                     existingPfClient.extendedParameters[value] = {
-                        values: [directoryClient[key]]
-                    }
+                        ... (Array.isArray(directoryClient[key]) ? { values: directoryClient[key] } : { values: [directoryClient[key]]}),                    }
                 }
                 else {
                     existingPfClient.extendedParameters[value] = {
