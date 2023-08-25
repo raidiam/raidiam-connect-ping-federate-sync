@@ -1,0 +1,65 @@
+{
+  "clientId": "test",
+  "enabled": true,
+  "redirectUris": [
+      "https://foo.com/bar",
+      "https://boo.com"
+  ],
+  "grantTypes": [
+      "AUTHORIZATION_CODE"
+  ],
+  "name": "test",
+  "description": "",
+  "logoUrl": "https://logo.com/something.gif",
+  "modificationDate": "2023-08-24T05:27:22.298Z",
+  "creationDate": "2023-08-24T05:01:57.654Z",
+  "refreshRolling": "SERVER_DEFAULT",
+  "refreshTokenRollingIntervalType": "SERVER_DEFAULT",
+  "persistentGrantExpirationType": "SERVER_DEFAULT",
+  "persistentGrantExpirationTime": 0,
+  "persistentGrantExpirationTimeUnit": "DAYS",
+  "persistentGrantIdleTimeoutType": "SERVER_DEFAULT",
+  "persistentGrantIdleTimeout": 0,
+  "persistentGrantIdleTimeoutTimeUnit": "DAYS",
+  "persistentGrantReuseType": "SERVER_DEFAULT",
+  "allowAuthenticationApiInit": true,
+  "bypassApprovalPage": true,
+  "restrictScopes": true,
+  "requirePushedAuthorizationRequests": true,
+  "requireJwtSecuredAuthorizationResponseMode": false,
+  "requestObjectSigningAlgorithm": "PS256",
+  "restrictedScopes": ["openid"],
+  "exclusiveScopes": [],
+  "restrictedResponseTypes": [
+      "code"
+  ],
+  "authorizationDetailTypes": [],
+  "restrictToDefaultAccessTokenManager": false,
+  "validateUsingAllEligibleAtms": true,
+  "oidcPolicy": {
+      "grantAccessSessionRevocationApi": false,
+      "grantAccessSessionSessionManagementApi": false,
+      "logoutMode": "NONE",
+      "pingAccessLogoutCapable": false,
+      "pairwiseIdentifierUserType": true,
+      "sectorIdentifierUri": "https://sectoridentifier.com"
+  },
+  "clientAuth": {
+      "type": "PRIVATE_KEY_JWT",
+      "secondarySecrets": [],
+      "enforceReplayPrevention": false,
+      "tokenEndpointAuthSigningAlgorithm": "PS256"
+  },
+  "jwksSettings": {
+      "jwksUrl": "https://doesnotexist/jwks"
+  },
+  "extendedParameters": {
+      
+  },
+  "deviceFlowSettingType": "SERVER_DEFAULT",
+  "requireProofKeyForCodeExchange": true,
+  "refreshTokenRollingGracePeriodType": "SERVER_DEFAULT",
+  "clientSecretRetentionPeriodType": "SERVER_DEFAULT",
+  "requireDpop": false,
+  "requireSignedRequests": true
+}

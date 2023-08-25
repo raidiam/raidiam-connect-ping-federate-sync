@@ -1,0 +1,26 @@
+{
+  "name": "raidiam-connect-ping-federate-sync",
+  "version": "1.0.0",
+  "description": "Raidiam Connect Ping Federate Clients Sync",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "NODE_OPTIONS=--experimental-vm-modules TEST=true jest",
+    "dev": "node index.js"
+  },
+  "author": "Raidiam",
+  "license": "MIT",
+  "dependencies": {
+    "install": "^0.13.0",
+    "node-fetch": "^3.3.2",
+    "npm": "^9.8.1",
+    "openid-client": "^5.4.3",
+    "winston": "^3.10.0",
+    "winston-daily-rotate-file": "^4.7.1"
+  },
+  "devDependencies": {
+    "jest": "^29.6.4",
+    "jest-fetch-mock": "^3.0.3",
+    "nock": "^13.3.3"
+  }
+}
