@@ -25,6 +25,16 @@ class PingFederateClientManager {
     return JSON.parse(JSON.stringify(pingFederateInitialClient));
   }
 
+  static async deleteAllCilents() {
+    const clients = await this.fetchFromPingFederate("GET", "");
+
+    for (const client of clients.items) {
+      logger.info(`Deleting client ${client.clientId}...`);
+      await this.fetchFromPingFederate("DELETE", `/${encodeURIComponent(client.clientId)}`);
+      logger.debug("Done.");
+    }
+  }
+
   static async fetchFromPingFederate(method, endpoint, body = null) {
     const options = {
       agent: httpsAgent,

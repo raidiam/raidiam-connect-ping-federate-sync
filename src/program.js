@@ -8,6 +8,17 @@ const logger = getLogger(config.log_level);
 
 async function discoverIssuer() {
   logger.info("Discovering issuer...");
+  if (config.directory_issuer_mtls_protected) {
+    logger.info("Directory issuer is mTLS protected. Setting up issuer with custom http options.");
+    Issuer[custom.http_options] = function(url, options) {
+      return {
+        ...(config.https_proxy ? { agent: new HttpsProxyAgent(config.https_proxy, { rejectUnauthorized: config.directory_tls_reject_unauthorized }) } : {}),
+        cert: config.directory_client_cert,
+        key: config.directory_client_key,
+        ca: config.directory_client_ca,
+      };
+    };
+  }
   const directoryIssuer = await Issuer.discover(config.directory_issuer);
   logger.info(`Discovered issuer ${directoryIssuer.issuer}`, directoryIssuer.metadata);
   return directoryIssuer;
@@ -22,6 +33,7 @@ async function createDirectoryClient(directoryIssuer) {
     token_endpoint_auth_method: "tls_client_auth",
   });
 
+  logger.info("Setting directory client mtls https agent...");
   directoryClient[custom.http_options] = function(url, options) {
     return {
       ...(config.https_proxy ? { agent: new HttpsProxyAgent(config.https_proxy, { rejectUnauthorized: config.directory_tls_reject_unauthorized }) } : {}),
@@ -77,7 +89,12 @@ export async function fetchClients(directoryClient, accessToken) {
 export async function main() {
   logger.info("Raidim Connect Ping Federate Client Sync");
   logger.info("=========================================");
-
+  if (config.directory_tls_reject_unauthorized) {
+    logger.warn("WARNING: Directory TLS reject unauthorized is set to true. This is not recommended for production environments as certification validation will not be performed.");
+  }
+  if (config.ping_federate_connection_reject_unauthorized) {
+    logger.warn("WARNING: Ping Federate TLS reject unauthorized is set to true. This is not recommended for production environments as certification validation will not be performed.");
+  }
   try {
     const directoryIssuer = await discoverIssuer();
     const directoryClient = await createDirectoryClient(directoryIssuer);
