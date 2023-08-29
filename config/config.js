@@ -9,12 +9,14 @@ export const config = {
   directory_client_key: fs.readFileSync("./certs/transport.key"),
   directory_client_ca: fs.readFileSync("./certs/ca.pem"),
   directory_tls_reject_unauthorized: true,
+  directory_clients_disabled_list: ["https://rp.directory.sandbox.connectid.com.au/openid_relying_party/a8009f3d-1dd2-4840-9cda-b029db1b7878"], // This list will always be disabled even if the directory says they are active
+  ping_federate_clients_ignore_list: ["https://rp.directory.sandbox.connectid.com.au/openid_relying_party/a8009f3d-1dd2-4840-9cda-b029db1b7878"], // This list of clientIds in Ping Federate will never be modified
   ping_federate_admin_uri: "https://localhost:9999/pf-admin-api/v1/oauth/clients",
   ping_federate_admin_username: "Administrator",
   ping_federate_admin_password: "2FederateM0re",
-  lookback_days: 1,
+  lookback_days: 10,
   ping_federate_connection_reject_unauthorized: false,
-  ping_federate_client_delete_instead_of_disable: true,
+  ping_federate_client_delete_instead_of_disable: false,
   resync_clients_retrieved_from_directory: false,
   log_level: "debug", // info or debug
   https_proxy: "http://localhost:3128",

@@ -1,6 +1,6 @@
 {
   "name": "raidiam-connect-ping-federate-sync",
-  "version": "1.0.0",
+  "version": "0.0.4",
   "description": "Raidiam Connect Ping Federate Clients Sync",
   "main": "index.js",
   "type": "module",
