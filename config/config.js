@@ -9,6 +9,7 @@ export const config = {
   directory_client_key: fs.readFileSync("./certs/transport.key"),
   directory_client_ca: fs.readFileSync("./certs/ca.pem"),
   directory_tls_reject_unauthorized: true,
+  directory_clients_filter_regexs: ["https://rp.directory.sandbox.connectid.com.au/openid_relying_party.*", "^[{]?[0-9a-fA-F]{8}-([0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}[}]?$"], // This list of regexs will be used to filter the clients retrieved from the directory
   directory_clients_disabled_list: ["https://rp.directory.sandbox.connectid.com.au/openid_relying_party/a8009f3d-1dd2-4840-9cda-b029db1b7878"], // This list will always be disabled even if the directory says they are active
   ping_federate_clients_ignore_list: ["https://rp.directory.sandbox.connectid.com.au/openid_relying_party/a8009f3d-1dd2-4840-9cda-b029db1b7878"], // This list of clientIds in Ping Federate will never be modified
   ping_federate_admin_uri: "https://localhost:9999/pf-admin-api/v1/oauth/clients",

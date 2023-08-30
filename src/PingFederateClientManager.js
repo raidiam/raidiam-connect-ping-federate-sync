@@ -73,6 +73,7 @@ class PingFederateClientManager {
     // Code defensively to ensure that the directory_clients_disabled_list is not empty
     let hasDisabledClients = false;
     let hasIgnoredClients = false;
+    let hasFilteredClients = false;
     if (Array.isArray(config.ping_federate_clients_ignore_list) && config.ping_federate_clients_ignore_list.length > 0) {
       logger.info(`Clients that are set to be ignored from any updates at all are: ${config.ping_federate_clients_ignore_list}`);
       hasIgnoredClients = true;
@@ -81,6 +82,10 @@ class PingFederateClientManager {
       logger.info(`Clients that are set to be always disabled are: ${config.directory_clients_disabled_list}`);
       hasDisabledClients = true;
     }
+    if (Array.isArray(config.directory_clients_filter_regexs) && config.directory_clients_filter_regexs.length > 0) {
+      logger.info(`Clients that are set to be filtered from the directory are: ${config.directory_clients_filter_regexs}`);
+      hasFilteredClients = true;
+    };
     if (hasDisabledClients && hasIgnoredClients) {
       // If the disabled clients contains any members also in the ignored list log a warning
       const disabledClientsThatAreAlsoIgnored = config.directory_clients_disabled_list.filter(client => config.ping_federate_clients_ignore_list.includes(client));
@@ -90,6 +95,15 @@ class PingFederateClientManager {
     }
     const disabledDirectoryClients = directoryClients.filter(directoryClient => (directoryClient.status !== "Active" || config.directory_clients_disabled_list.includes(directoryClient.client_id)));
     for (const disabledClient of disabledDirectoryClients) {
+      // If the client does not match any of the regex's in the filter list - make no changes to it ever.
+      if (hasFilteredClients) {
+        const matches = config.directory_clients_filter_regexs.filter(regex => new RegExp(regex).test(disabledClient.client_id));
+        if (matches.length === 0) {
+          logger.warn(`Client ${disabledClient.client_id} does not match any of the filter regexs this client will not be updated. Skipping...`);
+          continue;
+        }
+      }
+
       // If the client is in the ignore list - make not changes to it ever.
       if (config.ping_federate_clients_ignore_list.includes(disabledClient.client_id)) {
         logger.warn(`Client ${disabledClient.client_id} is in the ignore list no changes will be made to ping federate. Skipping...`);
@@ -120,6 +134,14 @@ class PingFederateClientManager {
 
     const activeDirectoryClients = directoryClients.filter(directoryClient => directoryClient.status === "Active" && !config.directory_clients_disabled_list.includes(directoryClient.client_id));
     for (const directoryClient of activeDirectoryClients) {
+      // If the client does not match any of the regex's in the filter list - make no changes to it ever.
+      if (hasFilteredClients) {
+        const matches = config.directory_clients_filter_regexs.filter(regex => new RegExp(regex).test(directoryClient.client_id));
+        if (matches.length === 0) {
+          logger.warn(`Client ${directoryClient.client_id} does not match any of the filter regexs this client will not be updated. This should be reported to the Directory Operator or the filter regex expressions should be reviewed to ensure that valid clients are not being filtered out. Skipping this client...`);
+          continue;
+        }
+      }
       if (config.ping_federate_clients_ignore_list.includes(directoryClient.client_id)) {
         logger.warn(`Client ${directoryClient.client_id} is in the ignore list no changes will be made to ping federate. Skipping...`);
         continue;
