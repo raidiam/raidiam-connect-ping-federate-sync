@@ -4,9 +4,7 @@ import { readFileSync } from "fs";
 import { config, claimsMapping } from "../config/config.js";
 import fetch from "node-fetch";
 import https from "https";
-import { Logger } from "winston";
 import { getLogger } from "./logger.js";
-import assert from "assert";
 const pingFederateInitialClient = JSON.parse(readFileSync("./config/clientDefinition.json"));
 const logger = getLogger(config.log_level);
 

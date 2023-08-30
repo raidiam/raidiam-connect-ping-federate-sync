@@ -80,6 +80,10 @@ The application is configured via a `config.js` file. Below are the configuratio
 - `resync_clients_retrieved_from_directory`: Boolean to indicate whether to force resync active clients against ping federate.
 - `https_proxy`: String to point to a CONNECT tunnel proxy like squid proxy. Null by default.
 
+- `directory_clients_filter_regexs`: Array of Regular expressions that will be applied to clients id's returned from the directory of participants. If none of the regular expressions match the returned client_id then the client_id will be ignored and updates or registration will not occur.
+- `directory_clients_disabled_list`: Array of client id's that will always be disabled if they are not already disabled even if they are active on the directory of participants. This behaviour will be ignored if the client is also present in the ignore list.
+- `ping_federate_clients_ignore_list`: Array of client id's that will be completely ignored from any update processing. This property will overwrite the behaviour of the disabled list processing.
+
 ### Extended attributes claims mappings
 
 The utility has a means of mapping any claims from the Directory to Ping Federates OAuth extended attributes simply by adding elements to the following map. Any entry included in the Clients API Response can be referenced, even those that are already used as part of standard claims. The program will take a property from the DirectoryClients record and add it as an extended oAuth client attribute to Ping Federate Extended Properties[https://docs.pingidentity.com/r/en-us/pingfederate-112/help_extendedpropertiestasklet_extendedpropertiesstate]. Please note that all properties are specified as an array of multiple values even if you only wish to store a single property.
