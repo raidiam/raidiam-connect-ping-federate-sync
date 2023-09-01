@@ -61,7 +61,8 @@ export async function fetchClients(directoryClient, accessToken) {
 
   do {
     logger.info(`Requesting clients page ${page}...`);
-    const clients = await directoryClient.requestResource(`${config.directory_clients_endpoint}?role=RP-CORE&page=${page}&startDate=${encodeURIComponent(daysAgo.toISOString())}`, accessToken);
+    // const clients = await directoryClient.requestResource(`${config.directory_clients_endpoint}?role=RP-CORE&page=${page}&startDate=${encodeURIComponent(daysAgo.toISOString())}`, accessToken); // Until the participants API returns disabled clients in a specific time range then we will retrieve all clients
+    const clients = await directoryClient.requestResource(`${config.directory_clients_endpoint}?role=RP-CORE&page=${page}`, accessToken);
     const clientsJson = JSON.parse(clients.body);
 
     if (page === 0) {

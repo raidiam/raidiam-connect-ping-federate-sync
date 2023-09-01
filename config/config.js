@@ -10,16 +10,16 @@ export const config = {
   directory_client_ca: fs.readFileSync("./certs/ca.pem"),
   directory_tls_reject_unauthorized: true,
   directory_clients_filter_regexs: ["https://rp.directory.sandbox.connectid.com.au/openid_relying_party.*", "^[{]?[0-9a-fA-F]{8}-([0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}[}]?$"], // This list of regexs will be used to filter the clients retrieved from the directory
-  directory_clients_disabled_list: ["https://rp.directory.sandbox.connectid.com.au/openid_relying_party/a8009f3d-1dd2-4840-9cda-b029db1b7878"], // This list will always be disabled even if the directory says they are active
-  ping_federate_clients_ignore_list: ["https://rp.directory.sandbox.connectid.com.au/openid_relying_party/a8009f3d-1dd2-4840-9cda-b029db1b7878"], // This list of clientIds in Ping Federate will never be modified
+  directory_clients_disabled_list: [], // This list will always be disabled even if the directory says they are active
+  ping_federate_clients_ignore_list: [], // This list of clientIds in Ping Federate will never be modified
   ping_federate_admin_uri: "https://localhost:9999/pf-admin-api/v1/oauth/clients",
   ping_federate_admin_username: "Administrator",
   ping_federate_admin_password: "2FederateM0re",
-  lookback_days: 10,
+  lookback_days: 10, // Do not change this value to be anything shorter until confirmation from connectid has been received that the participants endpoint will include clients that have had roles removed
   ping_federate_connection_reject_unauthorized: false,
-  ping_federate_client_delete_instead_of_disable: false,
+  ping_federate_client_delete_instead_of_disable: true,
   resync_clients_retrieved_from_directory: false,
-  log_level: "debug", // info or debug
+  log_level: "info", // info or debug
   https_proxy: "http://localhost:3128",
 };
 
