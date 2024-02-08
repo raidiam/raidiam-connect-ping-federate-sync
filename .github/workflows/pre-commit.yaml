@@ -10,7 +10,7 @@ jobs:
         with:
           node-version: 18
       - name: pre-commit
-        uses: pre-commit/action@v3.0.0
+        uses: pre-commit/action@v3.0.1
         env:
           SKIP: no-commit-to-branch
       - uses: actions/setup-python@v4.7.0
